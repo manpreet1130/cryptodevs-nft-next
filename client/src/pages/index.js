@@ -16,6 +16,7 @@ export default function Home() {
 	const [presaleStarted, setPresaleStarted] = useState(false);
 	const [presaleEnded, setPresaleEnded] = useState(false);
 	const [totalMinted, setTotalMinted] = useState(0);
+	const [isOwner, setIsOwner] = useState(false);
 
 	useEffect(() => {
 	}, []);
