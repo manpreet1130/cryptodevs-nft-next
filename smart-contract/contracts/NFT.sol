@@ -19,7 +19,6 @@ contract NFT is Ownable, ERC721Enumerable {
     uint256 public publicMintPrice;
     uint256 public totalPresaleTime;
     bool public hasPresaleStarted;
-    bool public hasPresaleEnded;
     uint256 public presaleStartTime;
     uint256 public presaleEndTime;
     bool public paused;
@@ -48,13 +47,14 @@ contract NFT is Ownable, ERC721Enumerable {
         require(!hasPresaleStarted, "presale has already started");
         presaleStartTime = block.timestamp;
         presaleEndTime = block.timestamp + totalPresaleTime;
+        hasPresaleStarted = true;
         emit PresaleStarted(presaleStartTime);
     }
 
     // presale mint
     function presaleMint() external payable ifNotPaused {
         require(hasPresaleStarted, "presale hasn't started yet");
-        require(!hasPresaleEnded, "presale has already ended");
+        require(block.timestamp <= presaleEndTime, "presale has already ended");        
         require(tokenId <= total, "sold out");
         require(whitelist.whitelistedAddresses(msg.sender), "not on the whitelist, wait for the public sale");
         require(ownerOfTokenId[msg.sender] == 0, "already minted an nft, one per address applciable...");
@@ -66,7 +66,7 @@ contract NFT is Ownable, ERC721Enumerable {
     // public mint
     function publicMint() external payable ifNotPaused {
         require(hasPresaleStarted, "presale hasn't started yet");
-        require(hasPresaleEnded, "presale hasn't ended yet");
+        require(block.timestamp > presaleEndTime, "presale hasn't ended yet");
         require(tokenId <= total, "sold out");
         require(ownerOfTokenId[msg.sender] == 0, "already minted an nft, one per address applciable...");
         require(msg.value >= publicMintPrice, "public mint price is 0.1 ether");
