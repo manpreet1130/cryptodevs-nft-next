@@ -44,7 +44,7 @@ export default function Home() {
 		if(isOwner && !presaleStarted) {
 			return <button className={styles.button}> Start Presale </button>
 		} else if(!isOwner && !presaleStarted) {
-			return <div className={styles.description}> Presale hasn't started yet... </div>
+			return <div className={styles.description}> Presale has not started yet... </div>
 		}
 
 		if(presaleStarted && !presaleEnded) {
