@@ -38,9 +38,7 @@ export default function Home() {
 					let _presaleEndTime = await contract.presaleEndTime();
 					if(_presaleEndTime.toString() < Math.floor(Date.now() / 1000).toString()) {
 						setPresaleEnded(true);
-					}
-					console.log(presaleEnded);
-					
+					}					
 				}
 			}, 3 * 1000);
 		}
