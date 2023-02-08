@@ -25,14 +25,14 @@ export default function Home() {
 	}
 
 	async function updateEthers() {
-		let tempProvider = new ethers.BrowserProvider(window.ethereum);
-		setProvider(tempProvider);
-		let tempSigner = tempProvider.getSigner();
-		setSigner(tempSigner);
-		let tempContract = new ethers.Contract(contractAddress, contractABI, tempSigner);
-		setContract(tempContract);
+		// let tempProvider = new ethers.BrowserProvider(window.ethereum);
+		// setProvider(tempProvider);
+		// let tempSigner = tempProvider.getSigner();
+		// setSigner(tempSigner);
+		// let tempContract = new ethers.Contract(contractAddress, contractABI, tempSigner);
+		// setContract(tempContract);
 
-		setWalletConnected(true);
+		// setWalletConnected(true);
 	}
 
 
