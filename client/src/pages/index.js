@@ -25,7 +25,7 @@ export default function Home() {
 		if(contract) {
 			checkTotalMinted = setInterval(async () => {
 				let minted = await contract.tokenId();
-				setTotalMinted(minted.toString());
+				setTotalMinted(minted.toString() - 1);
 			}, 5 * 1000);
 		}
 
@@ -35,8 +35,12 @@ export default function Home() {
 				let hasPresaleStarted = await contract.hasPresaleStarted();
 				setPresaleStarted(hasPresaleStarted);
 				if(hasPresaleStarted) {
-					let hasPresaleEnded = await contract.hasPresaleEnded();
-					setPresaleEnded(hasPresaleEnded);
+					let _presaleEndTime = await contract.presaleEndTime();
+					if(_presaleEndTime.toString() < Math.floor(Date.now() / 1000).toString()) {
+						setPresaleEnded(true);
+					}
+					console.log(presaleEnded);
+					
 				}
 			}, 3 * 1000);
 		}
@@ -83,7 +87,7 @@ export default function Home() {
 		console.log("presale mint...");
 		setLoading(true);
 		const tx = await contract.presaleMint({
-			value: ethers.utils.parseEther("0.05")
+			value: ethers.parseEther("0.05")
 		});
 		await tx.wait();
 		setLoading(false);
@@ -93,7 +97,7 @@ export default function Home() {
 		console.log("public mint...");
 		setLoading(true);
 		const tx = await contract.publicMint({
-			value: ethers.utils.parseEther("0.1")
+			value: ethers.parseEther("0.1")
 		});
 		await tx.wait();
 		setLoading(false);
